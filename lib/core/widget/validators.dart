@@ -61,16 +61,37 @@ class AppValidators {
   }
 
 
+  // static String? validatePhoneNumber(String? val) {
+  //   if (val == null) {
+  //     return 'this field is required';
+  //   } else if (int.tryParse(val.trim()) == null) {
+  //     return 'enter numbers only';
+  //   } else if (val.trim().length != 11) {
+  //     return 'enter value must equal 11 digit';
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
   static String? validatePhoneNumber(String? val) {
-    if (val == null) {
-      return 'this field is required';
-    } else if (int.tryParse(val.trim()) == null) {
-      return 'enter numbers only';
-    } else if (val.trim().length != 11) {
-      return 'enter value must equal 11 digit';
-    } else {
-      return null;
+    if (val == null || val.trim().isEmpty) {
+      return 'Phone number is required';
     }
+
+    if (int.tryParse(val.trim()) == null) {
+      return 'Enter numbers only';
+    }
+
+    if (val.trim().length != 11) {
+      return 'Phone number must be 11 digits';
+    }
+
+    final regex = RegExp(r'^01[0-2,5]{1}[0-9]{8}$');
+    if (!regex.hasMatch(val.trim())) {
+      return 'Enter a valid Egyptian phone number';
+    }
+
+    return null;
   }
 
 

@@ -22,12 +22,27 @@ dependencies:
   flutter_native_splash:
   readmore:
   smooth_page_indicator:
+  retrofit: ^4.0.3
+  logger: ^2.6.0
+#  json_annotation: ^4.9.0
+  json_annotation: ^4.11.0
+  dio: ^5.9.2
+  bloc: ^9.2.0
+  flutter_bloc: ^9.1.1
+  injectable: ^2.7.1+4
+  get_it: ^9.2.1
+  pretty_dio_logger: ^1.4.0
+  fluttertoast: ^9.0.0
 #  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  retrofit_generator: ^10.2.3
+  build_runner: ^2.4.8
+  injectable_generator: ^2.6.2
+  json_serializable: ^6.7.1
 
 flutter:
   generate: true
