@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           AppDialog.showMessage(
               context: context,
               message: state.appExceptions.message,
-              title: 'Error',
+              title: 'Error' ,
               posActionName: 'Ok',
               positiveAction: () {
                 Navigator.pop(context);

@@ -24,17 +24,12 @@ RegisterViewModel(this.registerRequest):super(AuthLoadingStates());
     var authResponse= await registerRequest.call(registerReq);
      emit(AuthSuccessStates(authResponse: authResponse));
    }on DioException catch(e){
-     // var msg = e.error is AppExceptions;
-     // String message = (msg as AppExceptions).message;
-
      final error = e.error;
-
      String message ='';
 
      if (error is AppExceptions) {
         message = error.message;
      }
-
   emit(AuthErrorState(appExceptions: ServerException(message: message)));
 
    }on AppExceptions catch(e){

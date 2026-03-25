@@ -1,9 +1,17 @@
 import 'dart:async';
+import 'package:ecommerce_app/core/resources/di.dart';
+import 'package:ecommerce_app/core/widget/main_error_widget.dart';
+import 'package:ecommerce_app/core/widget/main_loading_widget.dart';
+import 'package:ecommerce_app/domain/entities/category_or_brand/response/common/category_or_brand.dart';
+import 'package:ecommerce_app/features/main_layout/home/cubit/home_tap_states.dart';
+import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_brand_widget.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_category_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/resources/assets_manager.dart';
+import '../cubit/home_tap_view_model.dart';
 import 'widgets/custom_ads_widget.dart';
 import 'widgets/custom_section_bar.dart';
 
@@ -15,6 +23,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  var homeViewModel = getIt<HomeTapViewModel>();
   int _currentIndex = 0;
   late Timer _timer;
 
@@ -28,6 +37,8 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     _startImageSwitching();
+    homeViewModel.getCategories();
+    homeViewModel.getBrands();
   }
 
   void _startImageSwitching() {
@@ -57,34 +68,66 @@ class _HomeTabState extends State<HomeTab> {
           Column(
             children: [
               CustomSectionBar(sectionNname: 'Categories', function: () {}),
-              SizedBox(
-                height: 270.h,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return const CustomCategoryWidget();
-                  },
-                  itemCount: 20,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                ),
+              BlocBuilder<HomeTapViewModel, HomeTapStates>(
+                bloc: homeViewModel,
+                builder: (context, state) {
+                  if (state is HomeTapErrorState) {
+                    return MainErrorWidget(errMessage: state.errMessage);
+                  }
+                  else if (state is HomeTapSuccessState) {
+                    return SizedBox(
+                      height: 300.h,
+                      child:
+                      // Text(state.categoriesList!.length.toString())
+                      GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CustomCategoryWidget(
+                            categoryItem: state.categoriesList?[index]??CategoryOrBrand(),);
+                        },
+                        itemCount: state.categoriesList?.length??1,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return MainLoadingWidget();
+                  }
+                },
               ),
-              // SizedBox(height: 12.h),
-              // CustomSectionBar(sectionNname: 'Brands', function: () {}),
-              // SizedBox(
-              //   height: 270.h,
-              //   child: GridView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) {
-              //       return const CustomBrandWidget();
-              //     },
-              //     itemCount: 20,
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2,
-              //     ),
-              //   ),
-              // ),
+              SizedBox(height: 12.h),
+              CustomSectionBar(sectionNname: 'Brands', function: () {}),
+              BlocBuilder<HomeTapViewModel, HomeTapStates>(
+                bloc: homeViewModel,
+                builder: (context, state) {
+                   if(state is HomeTapSuccessState){
+                    return
+                      // Text(state.brandsList!.length.toString(),);
+                      SizedBox(
+                      height: 300.h,
+                      child: GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CustomBrandWidget(brandItem:state.brandsList?[index]??CategoryOrBrand() ,);
+                        },
+                        itemCount: state.brandsList?.length??0,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                      ),
+                    );
+                  } else if(state is HomeTapErrorState){
+                     return MainErrorWidget(errMessage: state.errMessage);
+                   }else{
+                     return MainLoadingWidget();
+                   }
+
+                },
+              ),
+
+
+              //most selling prod
               // CustomSectionBar(
               //   sectionNname: 'Most Selling Products',
               //   function: () {},
@@ -109,6 +152,8 @@ class _HomeTabState extends State<HomeTab> {
               //     ),
               //   ),
               // ),
+
+
               SizedBox(height: 12.h),
             ],
           )
