@@ -29,7 +29,7 @@ class ProductDescription extends StatelessWidget {
               .copyWith(fontSize: 18.sp),
           trimExpandedText: ' Read Less',
           trimCollapsedText: ' Read More',
-          trimLines: 3,
+          trimLines: 2,
           trimMode: TrimMode.Line,
           colorClickableText: ColorManager.appBarTitleColor,
         ),

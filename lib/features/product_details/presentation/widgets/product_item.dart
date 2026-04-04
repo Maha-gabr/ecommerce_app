@@ -10,6 +10,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      fit: BoxFit.cover,
       imageUrl: imageUrl,
       imageBuilder: (context, image) => Container(
         width: double.infinity,
@@ -22,6 +23,7 @@ class ProductItem extends StatelessWidget {
         alignment: Alignment.topRight,
         child: HeartButton(
           onTap: onTap,
+          isClicked: false,
         ),
       ),
     );

@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/widget/home_screen_app_bar.dart';
-import 'package:ecommerce_app/features/main_layout/categories/presentation/categories_tab.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/favourite_screen.dart';
+import 'package:ecommerce_app/features/main_layout/home/cubit/home_tap_view_model.dart';
+import 'package:ecommerce_app/features/main_layout/products/presentation/products_tab.dart';
 import 'package:ecommerce_app/features/main_layout/profile_tab/presentation/profile_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home/presentation/home_tab.dart';
 
@@ -18,15 +20,30 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int currentIndex = 0;
   List<Widget> tabs = [
-    const HomeTab(),
-    const CategoriesTab(),
+    const HomeTab( ),
+    const ProductsTab(),
     const FavouriteScreen(),
     const ProfileTab(),
   ];
+  // void _onSearch(String? value) {
+  //   // handle search based on current tab
+  //   switch (currentIndex) {
+  //     case 0:
+  //       context.read<HomeTapViewModel>().searchCategory(value??'');
+  //       context.read<HomeTapViewModel>().searchBrand(value??'');
+  //       break;
+  //     case 1:
+  //     // productsViewModel.search(value);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HomeScreenAppBar(),
+
+      appBar: HomeScreenAppBar(),
       extendBody: false,
       body: tabs[currentIndex],
       bottomNavigationBar: ClipRRect(
@@ -82,4 +99,5 @@ class CustomBottomNavBarItem extends BottomNavigationBarItem {
             ),
           ),
         );
+  
 }

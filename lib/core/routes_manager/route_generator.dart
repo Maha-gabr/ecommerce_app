@@ -12,15 +12,16 @@ class RouteGenerator {
     switch (settings.name) {
 
       case Routes.cartRoute:
-        return MaterialPageRoute(builder: (_) => const CartScreen());
+        return MaterialPageRoute(builder: (_) => const CartScreen(),);
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
       case Routes.productsScreenRoute:
-        return MaterialPageRoute(builder: (_) => const ProductsScreen());
+        return MaterialPageRoute(builder: (_) => const ProductsScreen(), );
 
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => const ProductDetails());
+        //الصح
+        return MaterialPageRoute(builder: (_) => const ProductDetails(),settings: settings);
 
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());

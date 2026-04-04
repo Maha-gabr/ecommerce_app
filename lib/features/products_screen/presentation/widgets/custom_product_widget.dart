@@ -1,9 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../domain/entities/product/response/product.dart';
 
 class CustomProductWidget extends StatelessWidget {
   final double width;
@@ -14,6 +18,9 @@ class CustomProductWidget extends StatelessWidget {
   final double price;
   final double discountPercentage;
   final double rating;
+  final Product? prodItem;
+  final Function onAddToCart;
+  final void Function()? onClick;
 
   const CustomProductWidget({
     super.key,
@@ -25,6 +32,9 @@ class CustomProductWidget extends StatelessWidget {
     required this.price,
     required this.discountPercentage,
     required this.rating,
+    required this.prodItem,
+    required this.onAddToCart, 
+    required this.onClick,
   });
 
   String truncateTitle(String title) {
@@ -48,10 +58,13 @@ class CustomProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productDetails),
+      onTap: () {
+        Navigator.pushNamed(
+            context, Routes.productDetails, arguments: prodItem);
+      },
       child: Container(
         width: width * 0.4,
-        height: height * 0.3,
+        height: height * 0.32,
         decoration: BoxDecoration(
           border: Border.all(
             color: ColorManager.primary.withOpacity(0.3),
@@ -69,32 +82,35 @@ class CustomProductWidget extends StatelessWidget {
                 children: [
                   // Not working with the lastest flutter version
 
-                  // CachedNetworkImage(
-                  //   imageUrl: image,
-                  //   height: height * 0.15,
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  //   placeholder: (context, url) =>
-                  //       const Center(child: CircularProgressIndicator()),
-                  //   errorWidget: (context, url, error) => const Icon(Icons.error),
-                  // ),
-                  // Image.network(
-                  //   image,
-                  //   fit: BoxFit.cover,
-                  // ),
-                  ClipRRect(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(14.r)),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      width: width,
-                    ),
+                  CachedNetworkImage(
+                    imageUrl: image,
+                    height: height * 0.15,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                    const Icon(Icons.error),
                   ),
+                  Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                  ),
+
+
+                  // ClipRRect(
+                  //   borderRadius:
+                  //       BorderRadius.vertical(top: Radius.circular(14.r)),
+                  //   child: Image.asset(
+                  //     image,
+                  //     fit: BoxFit.cover,
+                  //     width: width,
+                  //   ),
+                  // ),
                   Positioned(
                       top: height * 0.01,
                       right: width * 0.02,
-                      child: HeartButton(onTap: () {})),
+                      child: HeartButton(onTap: onClick, isClicked: false,)),
                 ],
               ),
             ),
@@ -103,6 +119,7 @@ class CustomProductWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -164,24 +181,64 @@ class CustomProductWidget extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: height * 0.036,
-                              width: width * 0.08,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorManager.primary,
-                              ),
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: InkWell(
+            onTap: () {
+              onAddToCart();
+              // BlocProvider.of<CartViewModel>(context)
+              //     .addProductToCart(prodItem!.id as AddCartRequest);
+            },
+            child: Container(
+              height: height * 0.036,
+              width: width * 0.08,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: ColorManager.primary,
+              ),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+
+                        // BlocBuilder<CartViewModel, CartStates>(
+                        //   builder: (context, state) {
+                        //     if (state is AddCartSuccessState) {
+                        //       return ClipRRect(
+                        //         borderRadius: BorderRadius.circular(100),
+                        //         child: InkWell(
+                        //           onTap: () {
+                        //             // BlocProvider.of<CartViewModel>(context)
+                        //             //     .addProductToCart(prodItem!.id as AddCartRequest);
+                        //                   },
+                        //           child: Container(
+                        //             height: height * 0.036,
+                        //             width: width * 0.08,
+                        //             decoration: BoxDecoration(
+                        //               shape: BoxShape.circle,
+                        //               color: ColorManager.primary,
+                        //             ),
+                        //             child: const Icon(
+                        //               Icons.add,
+                        //               color: Colors.white,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       );
+                        //     }else if(state is AddCartErrorState){
+                        //       return MainErrorWidget(errMessage: state.message);
+                        //     }else{
+                        //       return MainLoadingWidget();
+                        //
+                        //     }
+                        //
+                        //     }
+                        //
+                        //
+                        // ),
                       ],
                     )
                   ],

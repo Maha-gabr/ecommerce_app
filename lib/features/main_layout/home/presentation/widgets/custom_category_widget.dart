@@ -17,7 +17,9 @@ class CustomCategoryWidget extends StatelessWidget {
           height: 90,
           width: 90,
           fit: BoxFit.cover,
-          imageUrl: categoryItem.image??'',
+          imageUrl: (categoryItem.image?.isNotEmpty ?? false)
+              ? categoryItem.image!
+              : 'https://via.placeholder.com/150',
           placeholder: (context, url) =>
               const Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) =>
@@ -51,7 +53,7 @@ class CustomCategoryWidget extends StatelessWidget {
 //         ),
         SizedBox(height: 8.h),
         Text(
-    categoryItem.name??"",
+       categoryItem.name??"hh",
           style: getRegularStyle(color: ColorManager.darkBlue, fontSize: 14.sp),
         ),
       ],

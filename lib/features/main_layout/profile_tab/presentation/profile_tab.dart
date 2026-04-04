@@ -1,8 +1,10 @@
+import 'package:ecommerce_app/core/cashe/shared_prefs_utiles.dart';
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/font_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -42,10 +44,19 @@ class ProfileTabState extends State<ProfileTab> {
                 ),
               ),
               SizedBox(height: AppSize.s20.h),
-              Text(
-                'Welcome, Mohamed',
-                style: getSemiBoldStyle(
-                    color: ColorManager.primary, fontSize: FontSize.s18),
+              Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Text(
+                    'Welcome, Mohamed',
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primary, fontSize: FontSize.s18),
+                  ),
+                  IconButton(onPressed: (){
+                    SharedPrefsUtils.removeData(key: 'token');
+                    Navigator.pushNamedAndRemoveUntil(context, Routes.signInRoute, (route)=>false);
+                  }, icon: Icon(Icons.logout,color: ColorManager.primary,))
+                ],
               ),
               Text(
                 'mohamed.N@gmail.com',

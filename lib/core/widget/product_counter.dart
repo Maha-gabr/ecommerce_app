@@ -29,7 +29,7 @@ class ProductCounter extends StatelessWidget {
               },
               child: Icon(
                 Icons.remove_circle_outline,
-                size: 20.w,
+                size: 25.w,
                 color: ColorManager.white,
               )),
           SizedBox(
@@ -50,7 +50,7 @@ class ProductCounter extends StatelessWidget {
               child: Icon(
                 Icons.add_circle_outline,
                 color: ColorManager.white,
-                size: 20.w,
+                size: 25.w,
               )),
         ],
       ),

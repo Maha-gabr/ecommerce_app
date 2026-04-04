@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 
 class HeartButton extends StatefulWidget {
   final void Function()? onTap;
-  const HeartButton({super.key, required this.onTap});
+    bool isClicked;
+   HeartButton({super.key, required this.onTap, required this.isClicked});
 
   @override
   State<HeartButton> createState() => _HeartButtonState();
 }
 
 class _HeartButtonState extends State<HeartButton> {
-  String heartIcon = IconsAssets.icHeart;
-  bool isClicked = false;
+  // String heartIcon = IconsAssets.icHeart;
+  // bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -21,12 +22,14 @@ class _HeartButtonState extends State<HeartButton> {
         borderRadius: BorderRadius.circular(16),
       ),
       onTap: () {
-        setState(() {
-          isClicked = !isClicked;
-          heartIcon =
-              !isClicked ? IconsAssets.icHeart : IconsAssets.icClickedHeart;
-          widget.onTap?.call();
-        });
+        // setState(() {
+        //   widget.isClicked = widget.!isClicked;
+        //   heartIcon =
+        //       !isClicked ? IconsAssets.icHeart : IconsAssets.icClickedHeart;
+        //   widget.onTap?.call();
+        // });
+        widget.onTap?.call();
+
       },
       child: Material(
         // borderRadius: BorderRadius.circular(2),
@@ -38,7 +41,10 @@ class _HeartButtonState extends State<HeartButton> {
             padding: const EdgeInsets.all(6),
             child: ImageIcon(
               
-              AssetImage(heartIcon),
+              AssetImage(
+                  widget.isClicked ? IconsAssets.icClickedHeart : IconsAssets.icHeart,
+                  // heartIcon
+              ),
               color: ColorManager.primary,
             )),
       ),

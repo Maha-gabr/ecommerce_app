@@ -8,7 +8,9 @@ class SubCategoryItem extends StatelessWidget {
   final String title;
   final String image;
   final Function navigation;
-  const SubCategoryItem(this.title, this.image, this.navigation, {super.key});
+  const SubCategoryItem(this.title, this.image, this.navigation, {super.key}
+      // {super.key, required slug, required title, required id}
+      );
 
   @override
   Widget build(BuildContext context) {
