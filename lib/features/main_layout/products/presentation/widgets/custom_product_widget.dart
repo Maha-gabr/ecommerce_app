@@ -7,9 +7,10 @@ import 'package:ecommerce_app/core/widget/heart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../domain/entities/product/response/product.dart';
+import '../../../../../domain/entities/product/response/product.dart';
 
 class CustomProductWidget extends StatelessWidget {
+  final bool isClicked;
   final double width;
   final double height;
   final String image;
@@ -24,6 +25,7 @@ class CustomProductWidget extends StatelessWidget {
 
   const CustomProductWidget({
     super.key,
+    required this.isClicked,
     required this.width,
     required this.height,
     required this.image,
@@ -33,7 +35,7 @@ class CustomProductWidget extends StatelessWidget {
     required this.discountPercentage,
     required this.rating,
     required this.prodItem,
-    required this.onAddToCart, 
+    required this.onAddToCart,
     required this.onClick,
   });
 
@@ -67,7 +69,7 @@ class CustomProductWidget extends StatelessWidget {
         height: height * 0.32,
         decoration: BoxDecoration(
           border: Border.all(
-            color: ColorManager.primary.withOpacity(0.3),
+            color: ColorManager.primary,
             width: 2,
           ),
           borderRadius: BorderRadius.circular(16.r),
@@ -110,7 +112,7 @@ class CustomProductWidget extends StatelessWidget {
                   Positioned(
                       top: height * 0.01,
                       right: width * 0.02,
-                      child: HeartButton(onTap: onClick, isClicked: false,)),
+                      child: HeartButton(onTap: onClick, isClicked: isClicked,)),
                 ],
               ),
             ),

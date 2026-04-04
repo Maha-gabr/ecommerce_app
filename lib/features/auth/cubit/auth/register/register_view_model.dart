@@ -1,16 +1,18 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/core/cashe/shared_prefs_utiles.dart';
 import 'package:ecommerce_app/domain/entities/auth/request/register_request.dart';
 import 'package:ecommerce_app/domain/usecase/auth/regisrer_usecase.dart';
 import 'package:ecommerce_app/features/auth/cubit/auth/auth_states.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../../../../core/exceptions/app_exceptions.dart';
 @injectable
 class RegisterViewModel extends Cubit<AuthStates>{
 RegisterUseCase registerRequest;
 RegisterViewModel(this.registerRequest):super(AuthLoadingStates());
+
+
+late  RegisterRequest registerReq;
  Future<void> register (String pass , String email, String name , String phone , String rePass) async {
    try {
      emit(AuthLoadingStates());
@@ -22,6 +24,13 @@ RegisterViewModel(this.registerRequest):super(AuthLoadingStates());
        phone: phone
      );
     var authResponse= await registerRequest.call(registerReq);
+    await SharedPrefsUtils.saveData(key: 'name', value: name);
+     await SharedPrefsUtils.saveData(key: 'email', value: email);
+     await SharedPrefsUtils.saveData(key: 'phone', value: phone);
+     await SharedPrefsUtils.saveData(key: 'pass', value: pass);
+
+
+
      emit(AuthSuccessStates(authResponse: authResponse));
    }on DioException catch(e){
      final error = e.error;

@@ -3,9 +3,9 @@ import 'package:ecommerce_app/features/auth/presentation/screens/sign_in_screen.
 import 'package:ecommerce_app/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:ecommerce_app/features/cart/screens/cart_screen.dart';
 import 'package:ecommerce_app/features/main_layout/main_layout.dart';
-import 'package:ecommerce_app/features/product_details/presentation/screen/product_details.dart';
-import 'package:ecommerce_app/features/products_screen/presentation/screens/products_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../features/main_layout/products/presentation/product_details/presentation/screen/product_details.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -17,7 +17,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
       case Routes.productsScreenRoute:
-        return MaterialPageRoute(builder: (_) => const ProductsScreen(), );
+        // return MaterialPageRoute(builder: (_) => const ProductsScreen(), );
 
       case Routes.productDetails:
         //الصح

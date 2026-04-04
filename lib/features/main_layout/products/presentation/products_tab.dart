@@ -7,9 +7,10 @@ import 'package:ecommerce_app/features/cart/cubit/cart_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cart/cubit/cart_view_model.dart';
-import '../../../products_screen/cubit/product_tap_states.dart';
-import '../../../products_screen/cubit/product_tap_view_model.dart';
-import '../../../products_screen/presentation/widgets/custom_product_widget.dart';
+
+import 'widgets/custom_product_widget.dart';
+import '../cubit/product_tap_states.dart';
+import '../cubit/product_tap_view_model.dart';
 
 class ProductsTab extends StatefulWidget {
   const ProductsTab({super.key});
@@ -20,11 +21,12 @@ class ProductsTab extends StatefulWidget {
 }
 class _ProductsTabState extends State<ProductsTab> {
   var productViewModel = getIt<ProductTapViewModel>();
-
   @override
   void initState() {
     super.initState();
-    productViewModel.getProduct();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+     await productViewModel.getProduct();
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -138,8 +140,7 @@ class _ProductsTabState extends State<ProductsTab> {
                     image: prodList[index].imageCover ?? '',
                     title: prodList[index].title ?? "",
                     price: prodList[index].price!.toDouble(),
-                    rating:
-                    prodList[index].ratingsAverage!.toDouble(),
+                    rating: prodList[index].ratingsAverage!.toDouble(),
                     discountPercentage: 10,
                     height: height,
                     width: width,
@@ -151,9 +152,12 @@ class _ProductsTabState extends State<ProductsTab> {
                         "${prodList[index].id}",
                       );
                     },
+                    // isClicked: true,
+                    isClicked: context.watch<ProductTapViewModel>().isFav(prodList[index].id??''),
                     onClick: (){
-
-                    },
+                      BlocProvider.of<ProductTapViewModel>(context,listen: false).addProductToFavourite(prodList[index].id??"");
+                      // print('🚩🚩🚩${BlocProvider.of<ProductTapViewModel>(context,listen: false).favProductIds}');
+                    }
                   );
                 },
               ),

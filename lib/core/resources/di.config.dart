@@ -64,7 +64,7 @@ import '../../features/auth/cubit/auth/register/register_view_model.dart'
 import '../../features/cart/cubit/cart_view_model.dart' as _i70;
 import '../../features/main_layout/home/cubit/home_tap_view_model.dart'
     as _i183;
-import '../../features/products_screen/cubit/product_tap_view_model.dart'
+import '../../features/main_layout/products/cubit/product_tap_view_model.dart'
     as _i646;
 
 extension GetItInjectableX on _i174.GetIt {

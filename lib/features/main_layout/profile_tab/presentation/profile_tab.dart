@@ -25,7 +25,35 @@ class ProfileTabState extends State<ProfileTab> {
   bool isPasswordReadOnly = true;
   bool isMobileNumberReadOnly = true;
   bool isAddressReadOnly = true;
+  var name = SharedPrefsUtils.getData(key: 'name');
+  var email=SharedPrefsUtils.getData(key: 'email');
+  var phone =SharedPrefsUtils.getData(key: 'phone');
+  var pass =SharedPrefsUtils.getData(key: 'pass');
 
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController phoneController;
+  late TextEditingController addressController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(text: name.toString());
+    emailController = TextEditingController(text: email.toString());
+    passwordController = TextEditingController(text: pass.toString());
+    phoneController = TextEditingController(text:phone.toString());
+    addressController = TextEditingController(text: '6th October, street 11.....');
+  }
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,20 +63,11 @@ class ProfileTabState extends State<ProfileTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(
-                SvgAssets.routeLogo,
-                height: AppSize.s40,
-                colorFilter: ColorFilter.mode(
-                  ColorManager.primary,
-                  BlendMode.srcIn,
-                ),
-              ),
-              SizedBox(height: AppSize.s20.h),
               Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   Text(
-                    'Welcome, Mohamed',
+                    'Welcome, $name',
                     style: getSemiBoldStyle(
                         color: ColorManager.primary, fontSize: FontSize.s18),
                   ),
@@ -59,20 +78,20 @@ class ProfileTabState extends State<ProfileTab> {
                 ],
               ),
               Text(
-                'mohamed.N@gmail.com',
+                email.toString(),
                 style: getRegularStyle(
-                    color: ColorManager.primary.withOpacity(.5),
+                    color: ColorManager.primary,
                     fontSize: FontSize.s14),
               ),
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
-                borderBackgroundColor: ColorManager.primary.withOpacity(.5),
+                borderBackgroundColor: ColorManager.primary,
                 readOnly: isFullNameReadOnly,
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your full name',
                 label: 'Full Name',
                 controller:
-                    TextEditingController(text: 'Mohamed Mohamed Nabil'),
+                    nameController,
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -90,12 +109,12 @@ class ProfileTabState extends State<ProfileTab> {
               ),
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
-                borderBackgroundColor: ColorManager.primary.withOpacity(.5),
+                borderBackgroundColor: ColorManager.primary,
                 readOnly: isEmailReadOnly,
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your email address',
                 label: 'E-mail address',
-                controller: TextEditingController(text: 'mohamed.N@gmail.com'),
+                controller: emailController,
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -119,7 +138,7 @@ class ProfileTabState extends State<ProfileTab> {
                   });
                 },
                 controller: TextEditingController(text: '123456789123456'),
-                borderBackgroundColor: ColorManager.primary.withOpacity(.5),
+                borderBackgroundColor: ColorManager.primary,
                 readOnly: isPasswordReadOnly,
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your password',
@@ -135,8 +154,8 @@ class ProfileTabState extends State<ProfileTab> {
               ),
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
-                controller: TextEditingController(text: '01122118855'),
-                borderBackgroundColor: ColorManager.primary.withOpacity(.5),
+                controller:phoneController,
+                borderBackgroundColor: ColorManager.primary,
                 readOnly: isMobileNumberReadOnly,
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your mobile no.',
@@ -157,30 +176,30 @@ class ProfileTabState extends State<ProfileTab> {
                     .copyWith(fontSize: 18.sp),
               ),
               SizedBox(height: AppSize.s18.h),
-              BuildTextField(
-                controller:
-                    TextEditingController(text: '6th October, street 11.....'),
-                borderBackgroundColor: ColorManager.primary.withOpacity(.5),
-                readOnly: isAddressReadOnly,
-                backgroundColor: ColorManager.white,
-                hint: '6th October, street 11.....',
-                label: 'Your Address',
-                labelTextStyle: getMediumStyle(
-                    color: ColorManager.primary, fontSize: FontSize.s18),
-                suffixIcon: IconButton(
-                  icon: SvgPicture.asset(SvgAssets.edit),
-                  onPressed: () {
-                    setState(() {
-                      isAddressReadOnly = false;
-                    });
-                  },
-                ),
-                textInputType: TextInputType.streetAddress,
-                validation: AppValidators.validateFullName,
-                hintTextStyle: getRegularStyle(color: ColorManager.primary)
-                    .copyWith(fontSize: 18.sp),
-              ),
-              SizedBox(height: AppSize.s50.h),
+              // BuildTextField(
+              //   controller:
+              //       TextEditingController(text: '6th October, street 11.....'),
+              //   borderBackgroundColor: ColorManager.primary.withOpacity(.5),
+              //   readOnly: isAddressReadOnly,
+              //   backgroundColor: ColorManager.white,
+              //   hint: '6th October, street 11.....',
+              //   label: 'Your Address',
+              //   labelTextStyle: getMediumStyle(
+              //       color: ColorManager.primary, fontSize: FontSize.s18),
+              //   suffixIcon: IconButton(
+              //     icon: SvgPicture.asset(SvgAssets.edit),
+              //     onPressed: () {
+              //       setState(() {
+              //         isAddressReadOnly = false;
+              //       });
+              //     },
+              //   ),
+              //   textInputType: TextInputType.streetAddress,
+              //   validation: AppValidators.validateFullName,
+              //   hintTextStyle: getRegularStyle(color: ColorManager.primary)
+              //       .copyWith(fontSize: 18.sp),
+              // ),
+              // SizedBox(height: AppSize.s50.h),
             ],
           ),
         ),

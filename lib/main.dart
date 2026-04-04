@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/resources/di.dart';
 import 'core/routes_manager/route_generator.dart';
+import 'features/main_layout/products/cubit/product_tap_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +21,12 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var token = SharedPrefsUtils.getData(key: 'token') as String?;
-    return BlocProvider(
-      create: (context) => getIt<CartViewModel>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<CartViewModel>()),
+        BlocProvider(create: (context) => getIt<ProductTapViewModel>())
+
+    ],
       child: ScreenUtilInit(
         designSize: const Size(430, 932),
         minTextAdapt: true,

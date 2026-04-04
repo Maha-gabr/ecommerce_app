@@ -9,21 +9,26 @@ import 'package:ecommerce_app/features/main_layout/favourite/presentation/widget
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../domain/entities/product/response/product.dart';
+
 class FavoriteItem extends StatelessWidget {
-  const FavoriteItem({super.key, required this.product});
-  final Map<String, dynamic> product;
+  const FavoriteItem({super.key, required this.product, required this.isClicked, required this.onTap, required this.onAddToCart});
+  final Product? product;
+  final void Function()? onAddToCart;
+  final void Function()? onTap;
+  final bool isClicked ;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.productDetails, arguments: product);
+        Navigator.pushNamed(context, Routes.productDetails, );
       },
       child: Container(
         height: AppSize.s135.h,
         padding: EdgeInsets.only(right: AppSize.s8.w),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppSize.s16.r),
-            border: Border.all(color: ColorManager.primary.withOpacity(.3))),
+            border: Border.all(color: ColorManager.primary)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -31,14 +36,14 @@ class FavoriteItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSize.s16.r),
                   border:
-                      Border.all(color: ColorManager.primary.withOpacity(.6))),
+                      Border.all(color: ColorManager.primary)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSize.s16.r),
                 child: CachedNetworkImage(
                   width: AppSize.s120.w,
                   height: AppSize.s135.h,
                   fit: BoxFit.cover,
-                  imageUrl: product["imageUrl"],
+                  imageUrl: product?.imageCover??'',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(
                       color: ColorManager.primary,
@@ -61,14 +66,13 @@ class FavoriteItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                HeartButton(onTap: () {
-                  //TODO:remove product from wish list
-                }),
+                HeartButton(
+                    isClicked: isClicked
+                    ,onTap:onTap
+                ),
                 SizedBox(height: AppSize.s14.h),
                 AddToCartButton(
-                  onPressed: () {
-                    //TODO:add product to cart
-                  },
+                  onPressed:onAddToCart,
                   text: AppConstants.addToCart,
                 )
               ],
