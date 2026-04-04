@@ -8,7 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ProductRating extends StatelessWidget {
   final String productBuyers;
   final String productRating;
-  const ProductRating({super.key , required this.productBuyers , required this.productRating});
+
+  const ProductRating({super.key , required this.productBuyers , required this.productRating });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ProductRating extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             border: Border.all(
-                color: ColorManager.primary.withOpacity(.3),
+                color: ColorManager.primary,
                 width: 1),
             borderRadius: BorderRadius.circular(20.r),
           ),
@@ -50,7 +51,7 @@ class ProductRating extends StatelessWidget {
                 .copyWith(fontSize: 14.sp),
           ),
         ),
-        ProductCounter(add: (_) {}, remove: (_) {}, productCounter: 1)
+        // ProductCounter(add:onAdd, remove: onRemove, productCounter: counter)
       ],
     );
   }

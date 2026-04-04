@@ -72,7 +72,6 @@ class CartViewModel extends Cubit<CartStates>{
   Future<void> updateItemsInCart(String prodId, int count) async {
     try{
       var updateItemsInCart=await updateCountInCartUseCase.invoke(prodId, count);
-      print('🚩🚩🚩updated');
       cartList = updateItemsInCart.data?.products??[];
       data =updateItemsInCart.data;
       // await getItemsInCart();
