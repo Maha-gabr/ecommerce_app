@@ -23,7 +23,7 @@ Utilized Dio for robust REST API integration, featuring custom interceptors, err
 ## 🛠️ Getting Started
 
 ```bash
-git clone <your-repo-link>
+git clone https://github.com/Maha-gabr/ecommerce_app
 cd ecommerce_app
 flutter pub get
 flutter run
