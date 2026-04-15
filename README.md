@@ -1,16 +1,29 @@
 # ecommerce_app
 
-A new Flutter project.
+A modern, scalable E-commerce application built with clean architecture and high performance.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Technical Features & Architecture
 
-A few resources to get you started if this is your first Flutter project:
+**🏗️ Clean Architecture & State Management**  
+Engineered with a layered architecture (Data, Domain, Presentation) using Cubit/BLoC for scalable, maintainable, and predictable state handling.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**🔐 Firebase & Backend**  
+Integrated Firebase Auth for secure access and Cloud Firestore for real-time synchronization of user data and persistent storage.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**🌍 Globalized UI/UX**  
+Built a responsive Material 3 interface featuring dynamic theming (Light/Dark) and multi-language support (l10n) with seamless RTL/LTR transitions.
+
+**🌐 Networking & Data**  
+Utilized Dio for robust REST API integration, featuring custom interceptors, error handling, and automated JSON data mapping.
+
+---
+
+## 🛠️ Getting Started
+
+```bash
+git clone <your-repo-link>
+cd ecommerce_app
+flutter pub get
+flutter run
